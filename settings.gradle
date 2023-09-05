@@ -1,0 +1,4 @@
+rootProject.name = 'queue-subscribers'
+
+include 'client'
+include 'server'
