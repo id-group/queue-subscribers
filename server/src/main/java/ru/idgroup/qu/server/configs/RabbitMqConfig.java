@@ -15,6 +15,8 @@ public class RabbitMqConfig {
     public static final String REC_CORE_SMEV_REQUEST_QUEUE = "rec-core-smev-request-queue";
     public static final String SMEV_INNER_REQUEST_QUEUE = "smev-inner-request-queue";
     public static final String SMEV_INNER_RESPONSE_QUEUE = "smev-inner-response-queue";
+    public static final String SMEV_INNER_REST_REQUEST_QUEUE = "smev-inner-rest-request-queue";
+    public static final String SMEV_INNER_REST_RESPONSE_QUEUE = "smev-inner-rest-response-queue";
 
     @Bean
     public MessageConverter jsonConverter() {
@@ -63,5 +65,28 @@ public class RabbitMqConfig {
     }
 
 
+    @Bean
+    public Queue innerRestRequestQueue(){
+        return new Queue(SMEV_INNER_REST_REQUEST_QUEUE);
+    }
+
+    @Bean
+    public Binding innerRestRequestBinding(){
+        return BindingBuilder.bind(innerRestRequestQueue())
+                .to(topicExchange())
+                .with("smev.inner.rest.request");
+    }
+
+    @Bean
+    public Queue innerRestResponseQueue(){
+        return new Queue(SMEV_INNER_REST_RESPONSE_QUEUE);
+    }
+
+    @Bean
+    public Binding innerRestResponseBinding(){
+        return BindingBuilder.bind(innerRestResponseQueue())
+                .to(topicExchange())
+                .with("smev.inner.rest.response");
+    }
 
 }
